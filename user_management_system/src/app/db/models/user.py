@@ -1,10 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Enum
 from app.db.base_class import Base
-
-class UserRole(str, Enum):
-    GERERAL = 'GERERAL'
-    ADMIN = 'ADMIN'
-    MANAGER = 'MANAGER'
+from app.db.models.user_role import UserRole
 
 class User(Base):
     __tablename__ = "users"
