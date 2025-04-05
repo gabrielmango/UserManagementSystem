@@ -1,5 +1,3 @@
-Here's a polished version for your project's README in both Portuguese and English:
-
 # User Management System
 
 ## 🇺🇸 English
