@@ -1,0 +1,56 @@
+[tool.poetry]
+name = "user-management-system"
+version = "0.1.0"
+description = ""
+authors = ["gabrielhmango <gabrielhmango@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12.0"
+fastapi = "^0.115.12"
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
+sqlalchemy = "^2.0.40"
+python-jose = {extras = ["cryptography"], version = "^3.4.0"}
+passlib = "^1.7.4"
+python-multipart = "^0.0.20"
+python-dotenv = "^1.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+pytest-cov = "^6.1.0"
+httpx = "^0.28.1"
+pytest-mock = "^3.14.0"
+taskipy = "^1.14.1"
+ruff = "^0.11.4"
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+config_user = "git config --global user.name \"gabrielhmango\""
+config_email = "git config --global user.email \"gabrielhmango@gmail.com\""
+pre_test = "task format && task lint"
+test = "pytest --cov=fastapi_from_zero -vv"
+post_test = "coverage html"
+format = "ruff check . --fix && ruff format ."
+lint = "ruff check . && ruff check . --diff"
+pre_commit = 'task test && task config_user && task config_email && git add . && git status'
+commit = "git commit -S -m"
+post_commit = "git push"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
