@@ -1,0 +1,20 @@
+from sqlalchemy import Column, Integer, String, Boolean, Enum
+from app.db.base_class import Base
+
+class UserRole(str, Enum):
+    GERERAL = 'GERERAL'
+    ADMIN = 'ADMIN'
+    MANAGER = 'MANAGER'
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    full_name = Column(String, index=True)
+    is_active = Column(Boolean(), default=True)
+    role = Column(String, default=UserRole.GENERAL.value)
+
+    def __repr__(self):
+        return f"<User {self.email}, role: {self.role}>"
